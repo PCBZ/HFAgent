@@ -68,3 +68,13 @@ output = client.chat.completions.create(
     extra_body={'thinking': {'type': 'disabled'}},
 )
 print(output.choices[0].message.content)
+
+# The answer was hallucinated by the model. We need to stop to actually execute the function!
+output = client.chat.completions.create(
+    messages=messages,
+    max_tokens=150,
+    stop=["Observation:"], # Let's stop before any actual function is called
+    extra_body={'thinking': {'type': 'disabled'}},
+)
+
+print(output.choices[0].message.content)
