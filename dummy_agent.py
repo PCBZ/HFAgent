@@ -4,8 +4,9 @@ from openai import OpenAI
 ## You need an API key from https://aistudio.google.com/apikey. If you run this on Google Colab, you can set it up in the "settings" tab under "secrets". Make sure to call it "GEMINI_API_KEY"
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 
-# Gemini's OpenAI-compatible endpoint. "reasoning_effort": "none" below is its equivalent
-# of the thinking flag the course passes to Kimi.
+# Gemini's OpenAI-compatible endpoint. The course disables thinking for Kimi; Gemini 3
+# models can't turn reasoning off, but flash-lite defaults to the "minimal" level and keeps
+# thoughts out of the reply, so no equivalent flag is needed here.
 MODEL = "gemini-3.5-flash-lite"
 
 client = OpenAI(
@@ -20,7 +21,6 @@ output = client.chat.completions.create(
     stream=False,
     max_tokens=1024,
     model=MODEL,
-    extra_body={"reasoning_effort": "none"},
 )
 print(output.choices[0].message.content)
 
@@ -74,7 +74,6 @@ output = client.chat.completions.create(
     stream=False,
     max_tokens=200,
     model=MODEL,
-    extra_body={"reasoning_effort": "none"},
 )
 print(output.choices[0].message.content)
 
@@ -84,7 +83,6 @@ output = client.chat.completions.create(
     max_tokens=150,
     stop=["Observation:"], # Let's stop before any actual function is called
     model=MODEL,
-    extra_body={"reasoning_effort": "none"},
 )
 
 print(output.choices[0].message.content)
@@ -107,7 +105,6 @@ output = client.chat.completions.create(
     stream=False,
     max_tokens=200,
     model=MODEL,
-    extra_body={"reasoning_effort": "none"},
 )
 
 print(output.choices[0].message.content)
