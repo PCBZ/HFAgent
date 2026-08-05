@@ -1,10 +1,17 @@
 import os
-from huggingface_hub import InferenceClient
+from openai import OpenAI
 
-## You need a token from https://hf.co/settings/tokens, ensure that you select 'read' as the token type. If you run this on Google Colab, you can set it up in the "settings" tab under "secrets". Make sure to call it "HF_TOKEN"
-HF_TOKEN = os.environ.get("HF_TOKEN")
+## You need an API key from https://aistudio.google.com/apikey. If you run this on Google Colab, you can set it up in the "settings" tab under "secrets". Make sure to call it "GEMINI_API_KEY"
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 
-client = InferenceClient(model="moonshotai/Kimi-K2.5", token=HF_TOKEN)
+# Gemini's OpenAI-compatible endpoint. "reasoning_effort": "none" below is its equivalent
+# of the thinking flag the course passes to Kimi.
+MODEL = "gemini-3.5-flash-lite"
+
+client = OpenAI(
+    api_key=GEMINI_API_KEY,
+    base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+)
 
 output = client.chat.completions.create(
     messages=[
@@ -12,7 +19,8 @@ output = client.chat.completions.create(
     ],
     stream=False,
     max_tokens=1024,
-    extra_body={'thinking': {'type': 'disabled'}},
+    model=MODEL,
+    extra_body={"reasoning_effort": "none"},
 )
 print(output.choices[0].message.content)
 
@@ -65,7 +73,8 @@ output = client.chat.completions.create(
     messages=messages,
     stream=False,
     max_tokens=200,
-    extra_body={'thinking': {'type': 'disabled'}},
+    model=MODEL,
+    extra_body={"reasoning_effort": "none"},
 )
 print(output.choices[0].message.content)
 
@@ -74,7 +83,8 @@ output = client.chat.completions.create(
     messages=messages,
     max_tokens=150,
     stop=["Observation:"], # Let's stop before any actual function is called
-    extra_body={'thinking': {'type': 'disabled'}},
+    model=MODEL,
+    extra_body={"reasoning_effort": "none"},
 )
 
 print(output.choices[0].message.content)
@@ -96,7 +106,8 @@ output = client.chat.completions.create(
     messages=messages,
     stream=False,
     max_tokens=200,
-    extra_body={'thinking': {'type': 'disabled'}},
+    model=MODEL,
+    extra_body={"reasoning_effort": "none"},
 )
 
 print(output.choices[0].message.content)

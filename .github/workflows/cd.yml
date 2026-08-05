@@ -33,5 +33,5 @@ jobs:
 
       - name: Run Dummy Agent
         env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: .venv/bin/python dummy_agent.py
