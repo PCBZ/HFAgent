@@ -94,10 +94,14 @@ def get_weather(location):
 
 get_weather('London')
 
+# The course appends the observation to the model's own turn and lets it continue writing.
+# Gemini rejects a conversation ending on a model turn, so the observation is fed back as a
+# separate user turn instead -- same information, and the model still writes the Final Answer.
 messages=[
     {"role": "system", "content": SYSTEM_PROMPT},
     {"role": "user", "content": "What's the weather in London ?"},
-    {"role": "assistant", "content": output.choices[0].message.content + "Observation:\n" + get_weather('London')},
+    {"role": "assistant", "content": output.choices[0].message.content},
+    {"role": "user", "content": "Observation:\n" + get_weather('London')},
 ]
 
 output = client.chat.completions.create(
