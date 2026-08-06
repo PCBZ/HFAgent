@@ -1,4 +1,5 @@
 huggingface_hub
 openai
 smolagents
+ddgs
 
