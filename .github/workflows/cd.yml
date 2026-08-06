@@ -31,7 +31,12 @@ jobs:
           source .venv/bin/activate
           pip install -r requirement.txt
 
-      - name: Run Dummy Agent
+      # - name: Run Dummy Agent
+      #   env:
+      #     GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      #   run: .venv/bin/python dummy_agent.py
+
+      - name: Run Smolagents Demo
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: .venv/bin/python dummy_agent.py
+        run: .venv/bin/python smolagents_demo.py
