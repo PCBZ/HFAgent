@@ -19,3 +19,5 @@ agent.run(
     If we start right now, at what time will the party be ready?
     """
 )
+
+agent.push_to_hub('Devil2047/AlfredAgent')
