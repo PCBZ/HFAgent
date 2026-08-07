@@ -37,7 +37,12 @@ jobs:
       #     GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       #   run: .venv/bin/python dummy_agent.py
 
-      - name: Run Smolagents Demo
+      # - name: Run Smolagents Demo
+      #   env:
+      #     GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      #   run: .venv/bin/python smolagents_demo.py
+      
+      - name: Run Menu Demo
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: .venv/bin/python smolagents_demo.py
+        run: .venv/bin/python menu_demo.py
