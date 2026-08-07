@@ -1,4 +1,5 @@
-from smolagents import CodeAgent, tool, InferenceClientModel
+import os
+from smolagents import CodeAgent, tool, OpenAIModel
 
 # Tool to suggest a menu based on the occasion
 @tool
@@ -22,7 +23,11 @@ def suggest_menu(occasion: str) -> str:
         return "Custom menu for the butler."
 
 # Alfred, the butler, preparing the menu for the party
-agent = CodeAgent(tools=[suggest_menu], model=InferenceClientModel())
+agent = CodeAgent(tools=[suggest_menu], model=OpenAIModel(
+    model_id="gemini-3.5-flash-lite",
+    api_base="https://generativelanguage.googleapis.com/v1beta/openai/",
+    api_key=os.environ["GEMINI_API_KEY"],
+))
 
 # Preparing the menu for the party
 agent.run("Prepare a formal menu for the party.")
